@@ -28,4 +28,8 @@ import java.util.List;
 public interface CategoryMapper {
 
     List<Category> findAll();
+
+    void addToCategory(Category category);
+
+    void deleteById(Integer id);
 }

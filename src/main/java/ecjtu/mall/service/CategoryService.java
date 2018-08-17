@@ -24,5 +24,7 @@ import java.util.List;
  */
 public interface CategoryService {
 
-    List<Category> findAll();
+    List<Category> findAll();//查询分类管理的数据
+    void addToCategory(Category category);//添加商品分类
+    void deleteById(Integer id);
 }

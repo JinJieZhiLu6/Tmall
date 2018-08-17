@@ -32,9 +32,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    /**
+     * 查询所有分类信息
+     * @return
+     */
     @Override
     public List<Category> findAll() {
         List<Category> list = categoryMapper.findAll();
         return list;
+    }
+
+    /**
+     * 添加商品分类
+     * @param category
+     */
+    @Override
+    public void addToCategory(Category category) {
+        categoryMapper.addToCategory(category);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        categoryMapper.deleteById(id);
     }
 }

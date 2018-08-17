@@ -74,7 +74,7 @@
                     <tr>
                         <td>分类圖片</td>
                         <td>
-                            <input id="categoryPic" accept="image/*" type="file" name="image" />
+                            <input id="categoryPic" type="file" name="image" />
                         </td>
                     </tr>
                     <tr class="submitTR">

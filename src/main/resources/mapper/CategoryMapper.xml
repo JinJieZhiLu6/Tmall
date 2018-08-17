@@ -4,7 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ecjtu.mall.mapper.CategoryMapper">
+    <!--查询所有商品分类-->
     <select id="findAll" resultType="Category">
           select * from category
     </select>
+
+    <!--添加商品分类-->
+    <!--主键自增-->
+    <insert id="addToCategory" parameterType="Category" keyProperty="id" useGeneratedKeys="true">
+        insert into Category (name) values (#{name});
+    </insert>
+
+    <!--删除商品分类-->
+    <delete id="deleteById" parameterType="Integer">
+        delete from category where id=#{id}
+    </delete>
 </mapper>
