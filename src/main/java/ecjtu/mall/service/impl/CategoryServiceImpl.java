@@ -12,6 +12,7 @@ package ecjtu.mall.service.impl;
 
 import ecjtu.mall.mapper.CategoryMapper;
 import ecjtu.mall.pojo.Category;
+import ecjtu.mall.pojo.CategoryExample;
 import ecjtu.mall.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,10 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public List<Category> findAll() {
-        List<Category> list = categoryMapper.findAll();
+        CategoryExample example = new CategoryExample();
+        //查询所有
+        example.setOrderByClause("id");
+        List<Category> list = categoryMapper.selectByExample(example);
         return list;
     }
 
@@ -48,11 +52,22 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public void addToCategory(Category category) {
-        categoryMapper.addToCategory(category);
+        categoryMapper.insertSelective(category);
     }
 
     @Override
     public void deleteById(Integer id) {
-        categoryMapper.deleteById(id);
+        categoryMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Category findCategoryById(Integer id) {
+        Category category = categoryMapper.selectByPrimaryKey(id);
+        return category;
+    }
+
+    @Override
+    public void updateCategoryById(Category category) {
+        categoryMapper.updateByPrimaryKey(category);
     }
 }

@@ -49,6 +49,17 @@
         <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
         <!--配置别名-->
         <property name="typeAliasesPackage" value="ecjtu.mall.pojo"></property>
+        <!--分页插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
     <!--扫描Mapper-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

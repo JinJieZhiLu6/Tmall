@@ -26,5 +26,8 @@ public interface CategoryService {
 
     List<Category> findAll();//查询分类管理的数据
     void addToCategory(Category category);//添加商品分类
-    void deleteById(Integer id);
+    void deleteById(Integer id);//删除商品分类
+    Category findCategoryById(Integer id);//根据id查询商品分类
+    void updateCategoryById(Category category);//根据id更新商品分类
+
 }
