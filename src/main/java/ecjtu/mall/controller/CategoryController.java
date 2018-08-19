@@ -48,7 +48,7 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @RequestMapping("admin_property_list")
+    @RequestMapping("admin_category_list")
     public String findAll(Model model, PageUtils page) {
         //通过分页插件指定分页参数
         PageHelper.offsetPage(page.getStart(),page.getCount());
@@ -90,7 +90,7 @@ public class CategoryController {
         //保存图片到本地
         image.transferTo(pic);
 
-        return "redirect:/admin_property_list";
+        return "redirect:/admin_category_list";
     }
 
     /**
@@ -107,7 +107,7 @@ public class CategoryController {
         /*File  imageFolder= new File(session.getServletContext().getRealPath("img/category"));
         File file = new File(imageFolder,id+".jpg");
         file.delete();*/
-        return "redirect:/admin_property_list";
+        return "redirect:/admin_category_list";
     }
 
     /**
@@ -148,7 +148,7 @@ public class CategoryController {
         File pic = new File(path, name + exeName);
 
         image.transferTo(pic);
-        return "redirect:/admin_property_list";
+        return "redirect:/admin_category_list";
     }
 
 

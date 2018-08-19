@@ -2,8 +2,11 @@ package ecjtu.mall.mapper;
 
 import ecjtu.mall.pojo.Category;
 import ecjtu.mall.pojo.CategoryExample;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -2,8 +2,11 @@ package ecjtu.mall.mapper;
 
 import ecjtu.mall.pojo.Property;
 import ecjtu.mall.pojo.PropertyExample;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository
 public interface PropertyMapper {
     int deleteByPrimaryKey(Integer id);
 
