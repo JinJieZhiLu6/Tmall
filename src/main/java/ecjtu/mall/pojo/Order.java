@@ -33,7 +33,7 @@ public class Order {
     private String status;
 
 
-    /*如下是非数据库字段*/
+    /*以下是非数据库字段*/
     private List<OrderItem> orderItems;
 
     private User user;

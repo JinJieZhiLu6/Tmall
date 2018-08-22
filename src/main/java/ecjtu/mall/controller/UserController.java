@@ -36,6 +36,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     *
+     * @param model
+     * @param page
+     * @return
+     */
     @RequestMapping("admin_user_list")
     public String listAllUser(Model model,PageUtils page){
         List<User> users = userService.list();

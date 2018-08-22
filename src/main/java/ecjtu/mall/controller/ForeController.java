@@ -193,7 +193,7 @@ public class ForeController {
     }
 
     /**
-     *
+     * 首页显示产品分类并给分类填充商品
      * @param cid
      * @param sort
      * @param model
