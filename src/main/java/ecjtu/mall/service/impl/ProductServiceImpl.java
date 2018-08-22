@@ -116,6 +116,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    /**
+     * 获取所有单张商品图片中的第一张图片
+     * @param p
+     */
     @Override
     public void setFirstProductImage(Product p) {
         List<ProductImage> pis = productImageService.list(p.getId(), ProductImageService.type_single);
@@ -124,12 +128,26 @@ public class ProductServiceImpl implements ProductService {
             p.setFirstProductImage(pi);
         }
     }
+    public void setFirstProductImage(List<Product> ps) {
+        for (Product p : ps) {
+            setFirstProductImage(p);
+        }
+    }
 
+    /**
+     * 给商品分类填充商品
+     * @param cs
+     */
     @Override
     public void fill(List<Category> cs) {
         for (Category c : cs) {
             fill(c);
         }
+    }
+    @Override
+    public void fill(Category c) {
+        List<Product> ps = selectAllProductByCid(c.getId());
+        c.setProducts(ps);
     }
 
     @Override
@@ -148,6 +166,10 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * 为商品设置销量和评价
+     * @param p
+     */
     @Override
     public void setSaleAndReviewNumber(Product p) {
         int saleCount = orderItemService.getSaleCount(p.getId());
@@ -164,6 +186,13 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * 商品查找功能
+     * 根据关键字查找
+     * 模糊查询
+     * @param keyword
+     * @return
+     */
     @Override
     public List<Product> search(String keyword) {
         ProductExample example = new ProductExample();
@@ -173,17 +202,5 @@ public class ProductServiceImpl implements ProductService {
         setFirstProductImage(result);
         setCategory(result);
         return result;
-    }
-
-    @Override
-    public void fill(Category c) {
-        List<Product> ps = selectAllProductByCid(c.getId());
-        c.setProducts(ps);
-    }
-
-    public void setFirstProductImage(List<Product> ps) {
-        for (Product p : ps) {
-            setFirstProductImage(p);
-        }
     }
 }

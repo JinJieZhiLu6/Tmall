@@ -55,17 +55,30 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.insertSelective(category);
     }
 
+    /**
+     * 根据商品分类id删除商品商品分类
+     * @param id
+     */
     @Override
     public void deleteById(Integer id) {
         categoryMapper.deleteByPrimaryKey(id);
     }
 
+    /**
+     * 查找商品分类信息
+     * @param id
+     * @return
+     */
     @Override
     public Category findCategoryById(Integer id) {
         Category category = categoryMapper.selectByPrimaryKey(id);
         return category;
     }
 
+    /**
+     * 更新商品分类信息
+     * @param category
+     */
     @Override
     public void updateCategoryById(Category category) {
         categoryMapper.updateByPrimaryKey(category);

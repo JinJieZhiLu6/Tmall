@@ -31,10 +31,7 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
-    /**
-     * 匿名评价
-     * @return
-     */
+    //用户姓名匿名
     public String getAnonymousName(){
         if(null==name)
             return null;

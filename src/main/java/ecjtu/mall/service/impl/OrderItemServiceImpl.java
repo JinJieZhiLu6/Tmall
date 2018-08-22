@@ -100,7 +100,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     /**
-     * 填充
+     * 将一次购物的订单项设置给订单
      * @param o
      */
     public void fill(Order o) {
@@ -108,13 +108,16 @@ public class OrderItemServiceImpl implements OrderItemService {
         example.createCriteria().andOidEqualTo(o.getId());
         example.setOrderByClause("id desc");
         List<OrderItem> ois =orderItemMapper.selectByExample(example);
+        //将一个订单下的所有商品设置进去
         setProduct(ois);
 
+        //一个订单项所有商品总价
         float total = 0;
+        //总数
         int totalNumber = 0;
         for (OrderItem oi : ois) {
-            total+=oi.getNumber()*oi.getProduct().getPromotePrice();
-            totalNumber+=oi.getNumber();
+            total += oi.getNumber()*oi.getProduct().getPromotePrice();
+            totalNumber += oi.getNumber();
         }
         o.setTotal(total);
         o.setTotalNumber(totalNumber);
@@ -124,6 +127,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     /**
      * 与product关联
+     * 一个订单项中所有的商品
      * @param ois
      */
     public void setProduct(List<OrderItem> ois){

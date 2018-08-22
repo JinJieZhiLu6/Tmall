@@ -65,8 +65,11 @@ public class ForeController {
      */
     @RequestMapping("forehome")
     public String home(Model model) {
+        //查找到所有商品分类
         List<Category> cs= categoryService.findAll();
+        //给商品分类填充商品
         productService.fill(cs);
+        //给界面下每行分类添加商品
         productService.fillByRow(cs);
         model.addAttribute("cs", cs);
         return "fore/home";
@@ -140,18 +143,24 @@ public class ForeController {
      */
     @RequestMapping("foreproduct")
     public String product( int pid, Model model) {
+        //根据用户点击的商品获取商品id得到商品信息
         Product p = productService.selectProductById(pid);
+        //根据商品id获取商品分类信息，用于导航栏显示分类信息
         Category category = categoryService.findCategoryById(p.getCid());
+        //将分类信息设置给商品
         p.setCategory(category);
 
+        //给商品设置图片，单张图片和详情图片
         List<ProductImage> productSingleImages = productImageService.list(p.getId(), ProductImageService.type_single);
         List<ProductImage> productDetailImages = productImageService.list(p.getId(), ProductImageService.type_detail);
         p.setProductSingleImages(productSingleImages);
         p.setProductDetailImages(productDetailImages);
 
+        //给商品设置商品属性和评论列表
         List<PropertyValue> pvs = propertyValueService.selectAllPropertyValue(p.getId());
         List<Review> reviews = reviewService.list(p.getId());
         productService.setSaleAndReviewNumber(p);
+
         model.addAttribute("reviews", reviews);
         model.addAttribute("p", p);
         model.addAttribute("pvs", pvs);
@@ -242,17 +251,18 @@ public class ForeController {
      */
     @RequestMapping("foresearch")
     public String search( String keyword,Model model){
-
+        //设置分页属性
         PageHelper.offsetPage(0,20);
         List<Product> ps= productService.search(keyword);
         productService.setSaleAndReviewNumber(ps);
+
         model.addAttribute("ps",ps);
         return "fore/searchResult";
     }
 
     /**
      * 立即购买
-     * a. 如果已经存在这个产品对应的OrderItem，并且还没有生成订单，即还在购物车中。 那么就应该在对应的OrderItem基础上，调整数量
+     * a. 如果已经存在这个产品对应的OrderItem，并且还没有生成订单，即还在购物车中。那么就应该在对应的OrderItem基础上，调整数量
      *      a.1 基于用户对象user，查询没有生成订单的订单项集合
      *      a.2 遍历这个集合
      *      a.3 如果产品是一样的话，就进行数量追加
@@ -269,15 +279,18 @@ public class ForeController {
      * @return
      */
     @RequestMapping("forebuyone")
-    public String buyone(int pid, int num, HttpSession session) {
+    public String buyOne(int pid, int num, HttpSession session) {
         Product p = productService.selectProductById(pid);
         int oiid = 0;
 
         User user =(User)  session.getAttribute("user");
+        //true表示订单项含有该商品
         boolean found = false;
         List<OrderItem> ois = orderItemService.listByUser(user.getId());
         for (OrderItem oi : ois) {
-            if(oi.getProduct().getId().intValue()==p.getId().intValue()){
+            //判断用户订单项是否含有该商品
+            //如果有则只增加该商品的数量，并将found置为true
+            if(oi.getProduct().getId().intValue() == p.getId().intValue()){
                 oi.setNumber(oi.getNumber()+num);
                 orderItemService.update(oi);
                 found = true;
@@ -285,7 +298,7 @@ public class ForeController {
                 break;
             }
         }
-
+        //如果找不到则添加为新的订单项
         if(!found){
             OrderItem oi = new OrderItem();
             oi.setUid(user.getId());
@@ -300,9 +313,9 @@ public class ForeController {
     /**
      * 支付
      * 1. 通过字符串数组获取参数oiid
-     *          获取多个oiid是因为根据购物流程环节与表关系，
-     *          结算页面还需要显示在购物车中选中的多条OrderItem数据，
-     *          所以为了兼容从购物车页面跳转过来的需求，要用字符串数组获取多个oiid
+     *      获取多个oiid是因为根据购物流程环节与表关系，
+     *      结算页面还需要显示在购物车中选中的多条OrderItem数据，
+     *      所以为了兼容从购物车页面跳转过来的需求，要用字符串数组获取多个oiid
      * 2. 准备一个泛型是OrderItem的集合ois
      * 3. 根据前面步骤获取的oiids，从数据库中取出OrderItem对象，并放入ois集合中
      * 4. 累计这些ois的价格总数，赋值在total上
@@ -326,6 +339,7 @@ public class ForeController {
             ois.add(oi);
         }
 
+//        session.getAttribute("user");
         session.setAttribute("ois", ois);
         model.addAttribute("total", total);
         return "fore/buy";
@@ -369,7 +383,7 @@ public class ForeController {
     /**
      * 查看购物车
      * 1. 通过session获取当前用户
-     * 所以一定要登录才访问，否则拿不到用户对象,会报错
+     *     要登录才访问，否则拿不到用户对象,会报错
      * 2. 获取为这个用户关联的订单项集合 ois
      * 3. 把ois放在model中
      * 4. 服务端跳转到cart.jsp
@@ -379,7 +393,6 @@ public class ForeController {
      */
     @RequestMapping("forecart")
     public String cart( Model model,HttpSession session) {
-
         User user =(User)  session.getAttribute("user");
         List<OrderItem> ois = orderItemService.listByUser(user.getId());
         model.addAttribute("ois", ois);
@@ -393,7 +406,6 @@ public class ForeController {
      * 3. 遍历出用户当前所有的未生成订单的OrderItem
      * 4. 根据pid找到匹配的OrderItem，并修改数量后更新到数据库
      * 5. 返回字符串"success"
-     * @param model
      * @param session
      * @param pid
      * @param number
@@ -401,7 +413,7 @@ public class ForeController {
      */
     @RequestMapping("forechangeOrderItem")
     @ResponseBody
-    public String changeOrderItem( Model model,HttpSession session, int pid, int number) {
+    public String changeOrderItem(HttpSession session, int pid, int number) {
         User user =(User)  session.getAttribute("user");
         if(null==user)
             return "fail";
@@ -413,7 +425,6 @@ public class ForeController {
                 orderItemService.update(oi);
                 break;
             }
-
         }
         return "success";
     }
@@ -479,12 +490,11 @@ public class ForeController {
      * 3. payedPage.jsp
      *     显示订单中的地址，邮编，收货人，手机号码等等
      * @param oid
-     * @param total
      * @param model
      * @return
      */
     @RequestMapping("forepayed")
-    public String payed(int oid, float total, Model model) {
+    public String payed(int oid, Model model) {
         Order order = orderService.get(oid);
         order.setStatus(OrderService.waitDelivery);
         order.setPayDate(new Date());
