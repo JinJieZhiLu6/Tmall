@@ -10,6 +10,10 @@
  */
 package ecjtu.mall.service;
 
+import ecjtu.mall.pojo.ProductImage;
+
+import java.util.List;
+
 /**
  * 〈一句话功能简述〉<br> 
  * 〈商品图片管理业务层〉
@@ -23,5 +27,10 @@ public interface ProductImageService {
     String type_single = "type_single";//单张图片
     String type_detail = "type_detail";//详情图片
 
+    void add(ProductImage pi);
+    void delete(int id);
+    void update(ProductImage pi);
+    ProductImage get(int id);
+    List<ProductImage> list(int pid, String type);
 
 }

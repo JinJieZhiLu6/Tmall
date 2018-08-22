@@ -2,8 +2,11 @@ package ecjtu.mall.mapper;
 
 import ecjtu.mall.pojo.Review;
 import ecjtu.mall.pojo.ReviewExample;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository
 public interface ReviewMapper {
     int deleteByPrimaryKey(Integer id);
 

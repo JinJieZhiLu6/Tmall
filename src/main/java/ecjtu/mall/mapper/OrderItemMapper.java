@@ -2,8 +2,11 @@ package ecjtu.mall.mapper;
 
 import ecjtu.mall.pojo.OrderItem;
 import ecjtu.mall.pojo.OrderItemExample;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository
 public interface OrderItemMapper {
     int deleteByPrimaryKey(Integer id);
 

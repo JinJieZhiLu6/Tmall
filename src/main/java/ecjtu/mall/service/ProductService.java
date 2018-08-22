@@ -10,6 +10,7 @@
  */
 package ecjtu.mall.service;
 
+import ecjtu.mall.pojo.Category;
 import ecjtu.mall.pojo.Product;
 
 import java.util.List;
@@ -25,8 +26,26 @@ import java.util.List;
 public interface ProductService {
 
     List<Product> selectAllProductByCid(Integer cid);
+
     void insertProduct(Product product);
+
     Product selectProductById(Integer id);
+
     void updateProduct(Product product);
+
     void deleteProduct(Integer id);
+
+    void setFirstProductImage(Product p);
+
+    void fill(List<Category> cs);
+
+    void fill(Category c);
+
+    void fillByRow(List<Category> cs);
+
+    void setSaleAndReviewNumber(Product p);
+
+    void setSaleAndReviewNumber(List<Product> ps);
+
+    List<Product> search(String keyword);
 }

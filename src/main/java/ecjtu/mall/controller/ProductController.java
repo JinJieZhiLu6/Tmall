@@ -102,6 +102,11 @@ public class ProductController {
         return "redirect:/admin_product_list?cid="+product.getCid();
     }
 
+    /**
+     * 删除商品信息
+     * @param id
+     * @return
+     */
     @RequestMapping("admin_product_delete")
     public String deleteProduct(Integer id){
         Product product = productService.selectProductById(id);
@@ -110,23 +115,4 @@ public class ProductController {
         return "redirect:/admin_product_list?cid="+cid;
     }
 
-    /**
-     * 跳转到商品图片管理页面
-     * @param id
-     * @param model
-     * @return
-     */
-    @RequestMapping("admin_productImage_list")
-    public String ToProductImagePage(Integer id, Model model){
-        Product product = productService.selectProductById(id);
-        model.addAttribute("p",product);
-        return "admin/listProductImage";
-    }
-
-    @RequestMapping("admin_propertyValue_edit")
-    public String ToPropertyValuePage(Integer id, Model model){
-        Product product = productService.selectProductById(id);
-        model.addAttribute("p",product);
-        return "admin/editPropertyValue";
-    }
 }
