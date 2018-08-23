@@ -339,7 +339,16 @@ public class ForeController {
             ois.add(oi);
         }
 
-//        session.getAttribute("user");
+        //用于填写用户手机地址等信息回显
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+        Order order = orderService.selectByUid(id);
+
+        if(null == order){
+
+        }
+
+        session.setAttribute("order",order);
         session.setAttribute("ois", ois);
         model.addAttribute("total", total);
         return "fore/buy";
@@ -612,7 +621,7 @@ public class ForeController {
      * @return
      */
     @RequestMapping("foredoreview")
-    public String doreview( HttpSession session,@RequestParam("oid") int oid,@RequestParam("pid") int pid,String content) {
+    public String doReview( HttpSession session,@RequestParam("oid") int oid,@RequestParam("pid") int pid,String content) {
         Order o = orderService.get(oid);
         o.setStatus(OrderService.finish);
         orderService.update(o);

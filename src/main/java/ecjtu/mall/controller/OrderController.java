@@ -66,7 +66,7 @@ public class OrderController {
     }
 
     /**
-     * 订单派发
+     * 订单发货
      * @param o
      * @return
      * @throws IOException

@@ -22,6 +22,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 图片格式转.jpg格式
+ */
 public class ImageUtil {
 
 

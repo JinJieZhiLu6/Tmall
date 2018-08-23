@@ -1,5 +1,9 @@
 package ecjtu.mall.utils;
 
+/**
+ * 逆向工程插件
+ */
+
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;

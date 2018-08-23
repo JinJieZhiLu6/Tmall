@@ -13,6 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * 逆向工程
+ */
 public class MybatisGenerator {
 
 	

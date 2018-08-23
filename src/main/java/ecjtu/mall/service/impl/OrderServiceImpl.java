@@ -143,4 +143,20 @@ public class OrderServiceImpl implements OrderService {
         example.setOrderByClause("id desc");
         return orderMapper.selectByExample(example);
     }
+
+    /***
+     * 根据用户id查询订单信息
+     * @param uid
+     * @return
+     */
+    @Override
+    public Order selectByUid(Integer uid) {
+
+        OrderExample example = new OrderExample();
+        example.createCriteria().andUidEqualTo(uid);
+        List<Order> orders = orderMapper.selectByExample(example);
+        if(null != orders && orders.size() != 0){
+            return orders.get(0);
+        }else return null;
+    }
 }

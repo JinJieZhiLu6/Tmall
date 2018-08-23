@@ -39,4 +39,5 @@ public interface OrderService {
     List<Order> list();
     float add(Order c,List<OrderItem> ois);
     List<Order> list(int uid, String excludedStatus);
+    Order selectByUid(Integer uid);
 }

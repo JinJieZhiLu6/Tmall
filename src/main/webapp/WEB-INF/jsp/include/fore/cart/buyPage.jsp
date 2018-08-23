@@ -13,9 +13,9 @@
 		<div>
 		
 			<table class="addressTable">
+				<c:if test="${empty order.uid}">
 				<tr>
 					<td class="firstColumn">详细地址<span class="redStar">*</span></td>
-					
 					<td><textarea name="address" placeholder="建议您如实填写详细收货地址，例如接到名称，门牌好吗，楼层和房间号等信息"></textarea></td>
 				</tr>
 				<tr>
@@ -30,6 +30,26 @@
 					<td>手机号码 <span class="redStar">*</span></td>
 					<td><input name="mobile"  placeholder="请输入11位手机号码" type="text"></td>
 				</tr>
+				</c:if>
+
+				<c:if test="${not empty order.uid}">
+					<tr>
+						<td class="firstColumn">详细地址<span class="redStar">*</span></td>
+						<td><textarea name="address" >${order.address}</textarea></td>
+					</tr>
+					<tr>
+						<td>邮政编码</td>
+						<td><input  name="post" value="${order.post}" type="text"></td>
+					</tr>
+					<tr>
+						<td>收货人姓名<span class="redStar">*</span></td>
+						<td><input  name="receiver"  value="${order.receiver}" type="text"></td>
+					</tr>
+					<tr>
+						<td>手机号码 <span class="redStar">*</span></td>
+						<td><input name="mobile"  value="${order.mobile}" type="text"></td>
+					</tr>
+				</c:if>
 			</table>
 			
 		</div>
